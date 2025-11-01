@@ -31,7 +31,7 @@ RESET="\033[0m"
 
 clear
 function phrase() {
-    playwav buddy.wav
+    playwav $HOME/.config/g7ptoybox/buddy.wav
     echo -e "\n${GREEN} ${PHRASE}"
     sleep 5
     printf "${GREEN} \n ~ Richard Stallman"
@@ -41,7 +41,7 @@ function phrase() {
 }
 
 function logo() {
-    playwav beeps.wav
+    playwav $HOME/.config/g7ptoybox/beeps.wav
     echo -e "${DARK_GREEN}"
     sleep 0.1
     echo -e "     ${DARK_GREEN}--------  --  ------ "
@@ -85,7 +85,7 @@ function logo() {
     echo -e "${DARK_GREEN} By:     SyntaxError!"
     echo -e "${DARK_GREEN} GitHub: synt-xerror"
     sleep 0.1
-    playwav syntax.wav
+    playwav $HOME/.config/g7ptoybox/syntax.wav
 
     echo -e "${GREEN}"
     echo -e "\n Welcome to G7PlayToybox, $USER!\n"
@@ -249,7 +249,7 @@ function handle_menu() {
             sleep 1.5
             ;;
         7)
-            playwav syntax.wav
+            playwav $HOME/.config/g7ptoybox/syntax.wav
             echo -e "${GREEN}\n G7PlayToybox v1.0"
             echo -e " By SyntaxError! - github.com/synt-xerror"
             sleep 3
