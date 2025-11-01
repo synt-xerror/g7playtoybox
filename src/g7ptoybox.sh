@@ -126,31 +126,32 @@ detect_debug() {
 }
 
 install_stock () {
-    fastboot flash partition stock/moto/gpt.bin
-    fastboot flash bootloader stock/moto/bootloader.img
-    fastboot flash modem stock/moto/NON-HLOS.bin
-    fastboot flash fsg stock/moto/fsg.mbn
+    folder="$HOME/.config/g7ptoybox/roms/moto"
+
+    fastboot flash partition $folder/gpt.bin
+    fastboot flash bootloader $folder/bootloader.img
+    fastboot flash modem $folder/NON-HLOS.bin
+    fastboot flash fsg $folder/fsg.mbn
     fastboot erase modemst1
     fastboot erase modemst2
-    fastboot flash dsp stock/moto/adspso.bin
-    fastboot flash logo stock/moto/logo.bin
-    fastboot flash boot "stock/boot ($1)/boot.img"
-    fastboot flash dtbo stock/moto/dtbo.img
-    fastboot flash oem stock/moto/oem.img
-    fastboot flash system stock/moto/system.img_sparsechunk.0
-    fastboot flash system stock/moto/system.img_sparsechunk.1
-    fastboot flash system stock/moto/system.img_sparsechunk.2
-    fastboot flash system stock/moto/system.img_sparsechunk.3
-    fastboot flash system stock/moto/system.img_sparsechunk.4
-    fastboot flash system stock/moto/system.img_sparsechunk.5
-    fastboot flash system stock/moto/system.img_sparsechunk.6
-    fastboot flash system stock/moto/system.img_sparsechunk.7
-    fastboot flash system stock/moto/system.img_sparsechunk.8
-    fastboot flash vendor stock/moto/vendor.img_sparsechunk.0
-    fastboot flash vendor stock/moto/vendor.img_sparsechunk.1
+    fastboot flash dsp $folder/adspso.bin
+    fastboot flash logo $folder/logo.bin
+    fastboot flash boot $folder/boot.img
+    fastboot flash dtbo $folder/dtbo.img
+    fastboot flash oem $folder/oem.img
+    fastboot flash system $folder/system.img_sparsechunk.0
+    fastboot flash system $folder/system.img_sparsechunk.1
+    fastboot flash system $folder/system.img_sparsechunk.2
+    fastboot flash system $folder/system.img_sparsechunk.3
+    fastboot flash system $folder/system.img_sparsechunk.4
+    fastboot flash system $folder/system.img_sparsechunk.5
+    fastboot flash system $folder/system.img_sparsechunk.6
+    fastboot flash system $folder/system.img_sparsechunk.7
+    fastboot flash system $folder/system.img_sparsechunk.8
+    fastboot flash vendor $folder/vendor.img_sparsechunk.0
+    fastboot flash vendor $folder/vendor.img_sparsechunk.1
     fastboot erase userdata
     fastboot erase cache
-    fastboot reboot
 }
 
 
@@ -221,10 +222,40 @@ function handle_menu() {
             sleep 1.5
             ;;
         3)
-            
-            echo -e "${GREEN}\n Installing Stock ROM..."
-            sleep 2
-            echo " (Pretend ROM flash)"
+            echo "ATENÇÃO, ISSO VAI APAGAR TODOS OS DADOS DO SEU DISPOSITIVO. CONTINUAR? [Y/n]"
+            read confirm
+
+            # Normaliza a resposta para maiúscula
+            confirm=$(echo "$confirm" | tr '[:lower:]' '[:upper:]')
+
+            if [[ "$confirm" == "Y" || "$confirm" == "" ]]; then
+                 echo -e "${GREEN}\n Installing Stock ROM..."
+                sleep 2
+                echo "Reiniciando no bootloader..."
+                adb reboot bootloader
+                echo "Aguardando conexão com fastboot..."
+                SECONDS=0
+
+                until fastboot devices; do
+                    sleep 1
+                    if [ $SECONDS -ge 30 ]; then
+                        echo "[ERRO] Timeout: dispositivo não detectado em fastboot."
+                        exit 1
+                    fi
+                done
+
+                fastboot erase system
+                fastboot erase userdata
+                fastboot erase cache
+                fastboot erase vendor
+                install_stock
+
+                echo "Operação concluída, reiniciando..."
+                fastboot reboot
+            else
+                echo "Operação cancelada."
+                exit 0
+            fi
             sleep 1.5
             ;;
         4)
