@@ -160,8 +160,6 @@ function handle_menu() {
         1)  command_exists adb
             command_exists fastboot
             
-            detect_rom
-
             echo "Waiting for USB debugging activation..."
             until detect_debug; do
                 sleep 1
