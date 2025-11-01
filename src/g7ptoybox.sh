@@ -60,7 +60,7 @@ function logo() {
     sleep 0.05
     echo -e "     ${DARK_GREEN}--------  --   ----   -      ------   --  "
     sleep 0.05
-    echo -e "               ${DARK_GREEN}--   -      ----- --    --  --    v0.3.1-alpha.1"
+    echo -e "               ${DARK_GREEN}--   -      ----- --    --  --    v0.3.0-alpha.2"
     sleep 0.1
     echo -e "              ${DARK_GREEN}--      ${GREEN}__                ___.                 "
     sleep 0.05
