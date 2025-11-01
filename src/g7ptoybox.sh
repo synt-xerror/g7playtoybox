@@ -168,7 +168,7 @@ function handle_menu() {
             done
 
             # instala APK Magisk
-            MAGISK_APK="apks/Magisk-v29.0.apk"
+            MAGISK_APK="$HOME/.config/g7ptoybox/apks/Magisk-v29.0.apk"
             echo -e "${GREEN}Instalando APK Magisk...${RESET}"
             adb install -r -g "$MAGISK_APK"
 
