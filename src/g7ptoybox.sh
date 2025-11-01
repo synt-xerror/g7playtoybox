@@ -170,6 +170,11 @@ function handle_menu() {
             echo -e "${GREEN}Instalando APK Magisk...${RESET}"
             adb install -r -g "$MAGISK_APK"
 
+            # PARA FAZER:
+            # Pegar o boot.img da rom e mandar para o cartão sd
+            # Ele pega o arquivo incompleto do magisk e faz o pull, mas na real deveria esperar o patch terminar
+            # Além disso, ele não garante que não possa ter um já na pasta, tem que fazer uma forma dele limpar qualquer um que já esteja lá
+
             echo "Entre no app do Magisk e faça o patch do boot.img"
             echo "⏳ Aguardando o Magisk gerar o boot patchado..."
 
@@ -201,8 +206,8 @@ function handle_menu() {
             done
 
             # Flash do boot.img patchado no slot ativo
-            fastboot flash boot_a $BOOT_IMG
-            fastboot flash boot_b $BOOT_IMG
+            fastboot flash boot_a ./magisk_patched.img
+            fastboot flash boot_b ./magisk_patched.img
 
             # Reinicia o sistema
             echo "Reiniciando o dispositivo..."
