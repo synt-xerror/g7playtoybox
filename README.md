@@ -42,5 +42,5 @@ Use por sua conta e risco.
 ## Instalação:
 
 ```bash
-bash <(curl -sL https://raw.githubusercontent.com/synt-xerror/g7playtoybox/main/install.sh)
+curl -sL https://raw.githubusercontent.com/synt-xerror/g7playtoybox/main/install.sh | bash
 ```
