@@ -36,3 +36,11 @@ Este projeto foi feito **para uso pessoal e experimental**.
 Não me responsabilizo por **qualquer dano**, falha de sistema, *brick*, perda de dados, perda de garantia ou mal funcionamento causado pelo uso deste código em outros dispositivos.
 
 Use por sua conta e risco.
+
+---
+
+## Instalação:
+
+```bash
+bash <(curl -sL https://raw.githubusercontent.com/synt-xerror/g7playtoybox/main/install.sh)
+```
