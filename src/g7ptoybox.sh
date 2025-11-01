@@ -60,7 +60,7 @@ function logo() {
     sleep 0.05
     echo -e "     ${DARK_GREEN}--------  --   ----   -      ------   --  "
     sleep 0.05
-    echo -e "               ${DARK_GREEN}--   -      ----- --    --  --    v0.3.0-alpha.2"
+    echo -e "               ${DARK_GREEN}--   -      ----- --    --  --    v0.3.0-beta.1"
     sleep 0.1
     echo -e "              ${DARK_GREEN}--      ${GREEN}__                ___.                 "
     sleep 0.05
@@ -232,6 +232,12 @@ function handle_menu() {
                  echo -e "${GREEN}\n Installing Stock ROM..."
                 sleep 2
                 echo "Reiniciando no bootloader..."
+
+                echo "Waiting for USB debugging activation..."
+                until detect_debug; do
+                    sleep 1
+                done
+
                 adb reboot bootloader
                 echo "Aguardando conexão com fastboot..."
                 SECONDS=0
@@ -309,13 +315,13 @@ function main_menu() {
 
     echo -e "${GREEN}\n Main Menu - G7PlayToybox\n${RESET}"
     echo -e "${DARK_GREEN} 1) Install Magisk"
-    echo -e " 2) Remove Magisk"
-    echo -e " 3) Install Stock ROM"
-    echo -e " 4) Install LineageOS"
-    echo -e " 5) Backup current system"
-    echo -e " 6) Restore backup"
+    echo -e " 2) Remove Magisk (Soon)"
+    echo -e " 3) Install Stock ROM (Beta)"
+    echo -e " 4) Install LineageOS (Soon)"
+    echo -e " 5) Backup current system (Soon)"
+    echo -e " 6) Restore backup (Soon)"
     echo -e " 7) About G7PlayToybox"
-    echo -e " 8) Fix Play Integrity (BETA)"
+    echo -e " 8) Fix Play Integrity (Soon)"
     echo -e " 9) Exit\n${RESET}"
 
     read -p " Select an option [1-8]: " choice
