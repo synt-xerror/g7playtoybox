@@ -222,44 +222,55 @@ function handle_menu() {
             sleep 1.5
             ;;
         3)
-            echo "ATENÇÃO, ISSO VAI APAGAR TODOS OS DADOS DO SEU DISPOSITIVO. CONTINUAR? [Y/n]"
+            echo "${DARK_GREEN}\n ATENÇÃO, ISSO VAI APAGAR TODOS OS DADOS DO SEU DISPOSITIVO. CONTINUAR? [Y/n]"
             read confirm
 
             # Normaliza a resposta para maiúscula
             confirm=$(echo "$confirm" | tr '[:lower:]' '[:upper:]')
 
             if [[ "$confirm" == "Y" || "$confirm" == "" ]]; then
-                 echo -e "${GREEN}\n Installing Stock ROM..."
+                echo -e "\n Installing Stock ROM..."
                 sleep 2
-                echo "Reiniciando no bootloader..."
+                echo -e "\n Reiniciando no bootloader..."
 
-                echo "Waiting for USB debugging activation..."
+                echo -e "\n Waiting for USB debugging activation..."
                 until detect_debug; do
                     sleep 1
                 done
 
                 adb reboot bootloader
-                echo "Aguardando conexão com fastboot..."
+                echo -e "\n Aguardando conexão com fastboot...${RESET}"
                 SECONDS=0
 
                 until fastboot devices; do
                     sleep 1
                     if [ $SECONDS -ge 30 ]; then
-                        echo "[ERRO] Timeout: dispositivo não detectado em fastboot."
+                        echo -e "${DARK_GREEN}\n [ERRO] Timeout: dispositivo não detectado em fastboot."
                         exit 1
                     fi
                 done
+
+                echo -e "\n Iniciando formatação...  ${RESET}"
+                echo -e "${GREEN}"
 
                 fastboot erase system
                 fastboot erase userdata
                 fastboot erase cache
                 fastboot erase vendor
+
+                echo -e "${RESET}"
+                echo -e "${DARK_GREEN}\n Formatação concluída. Instalando stock ROM ${RESET}"
+
+                echo -e "${GREEN}"
+
                 install_stock
 
-                echo "Operação concluída, reiniciando..."
+                echo -e "${RESET}"
+
+                echo "${DARK_GREEN}\n Operação concluída, reiniciando... ${RESET}"
                 fastboot reboot
             else
-                echo "Operação cancelada."
+                echo "${DARK_GREEN}\n Operação cancelada. ${RESET}"
                 exit 0
             fi
             sleep 1.5
