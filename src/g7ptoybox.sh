@@ -234,7 +234,7 @@ function handle_menu() {
                 echo "Reiniciando no bootloader..."
 
                 echo "Waiting for USB debugging activation..."
-                until detect_debug; do
+                until detect_debug || fastboot devices; do
                     sleep 1
                 done
 
@@ -256,7 +256,7 @@ function handle_menu() {
                 fastboot erase vendor
                 install_stock
 
-                echo "Operação concluída, reiniciando..."
+                echo "\n [INFO]: Operação concluída, reiniciando... \n"
                 fastboot reboot
             else
                 echo "Operação cancelada."
